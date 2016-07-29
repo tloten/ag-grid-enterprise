@@ -12,6 +12,8 @@ export class AggFuncService implements IAggFuncService {
     private static AGG_MAX = 'max';
     private static AGG_COUNT = 'count';
     private static AGG_AVG = 'avg';
+    private static AGG_DEFAULT_HIDDEN = 'default-hidden';
+
 
     @Autowired('gridOptionsWrapper') gridOptionsWrapper: GridOptionsWrapper;
 
@@ -26,6 +28,11 @@ export class AggFuncService implements IAggFuncService {
 
         this.initialiseWithDefaultAggregations();
         this.addAggFuncs(this.gridOptionsWrapper.getAggFuncs());
+
+        var defaultHiddenAggFunc = this.gridOptionsWrapper.getDefaultHiddenAggFunc();
+        if(defaultHiddenAggFunc) {
+            this.addAggFunc(AggFuncService.AGG_DEFAULT_HIDDEN, defaultHiddenAggFunc);
+        }
     }
 
     private initialiseWithDefaultAggregations(): void {

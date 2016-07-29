@@ -66,7 +66,8 @@ export class ValuesColumnPanel extends AbstractColumnDropPanel {
 
         var columnValue = column.isAllowValue();
         var columnNotValue= !column.isValueActive();
-        return columnValue && columnNotValue;
+        var columnIsDefaultHiddenAgg = column.isDefaultHiddenAggActive();
+        return columnValue && (columnNotValue || columnIsDefaultHiddenAgg);
     }
 
     protected removeColumns(columns: Column[]): void {
@@ -87,7 +88,6 @@ export class ValuesColumnPanel extends AbstractColumnDropPanel {
     }
 
     protected getExistingColumns(): Column[] {
-        return this.columnController.getAggregationColumns();
+        return this.columnController.getNonDefaultAggregationColumns();
     }
-
 }
